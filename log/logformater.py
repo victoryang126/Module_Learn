@@ -1,4 +1,5 @@
 import logging
+import colorlog
 """
 %(asctime)s
 表示人类易读的 LogRecord 生成时间。 默认形式为 '2003-07-08 16:49:45,896' （逗号之后的数字为时间的毫秒部分
@@ -55,7 +56,18 @@ logger.addHandler(console_handler)
 formatter = logging.Formatter('%(asctime)s  %(levelname)s  %(filename)s  %(funcName)s  '
                               ' %(lineno)d  %(module)s   %(pathname)s '
                               '  %(message)s')
-console_handler.setFormatter(formatter)
+color_config = {
+    'DEBUG': 'black',
+    'INFO': 'green',
+    'WARNING': 'yellow',
+    'ERROR': 'red',
+    'CRITICAL': 'red',
+}
+# console_fmt = '%(log_color)s%(asctime)s-%(threadName)s-%(filename)s-[line:%(lineno)d]-%(levelname)s: %(message)s'
+console_fmt = '%(log_color)s%(asctime)s-%(levelname)s-%(filename)s %(funcName)s -[line:%(lineno)d]-s %(module)s  %(pathname)s: %(message)s'
+# console_fmt = '%(log_color)\s%(asctime)s  %(levelname)s  %(filename)s  %(funcName)s  %(lineno)d %(module)s  %(pathname)s  %(message)s'
+console_formatter = colorlog.ColoredFormatter(fmt=console_fmt, log_colors=color_config)
+console_handler.setFormatter(console_formatter)
 # formatter = logging.Formatter('${name} - ${levelname} - ${message}', style='$')
 # formatter = logging.Formatter('{name} - {levelname} - {message}', style='{')
 
@@ -63,7 +75,7 @@ console_handler.setFormatter(formatter)
 if __name__ == '__main__':
     # 输出日志记录
     logger.debug("============【开始测试】====================")
-    # logger.info("============【开始测试】====================")
-    # logger.warning("============【开始测试】====================")
-    # logger.error("============【开始测试】====================")
-    # logger.critical("============【开始测试】====================")
+    logger.info("============【开始测试】====================")
+    logger.warning("============【开始测试】====================")
+    logger.error("============【开始测试】====================")
+    logger.critical("============【开始测试】====================")

@@ -8,6 +8,16 @@ import traceback
 def exception_hook3(exc_type, exc_value, exc_traceback):
     logging.critical("Uncaught exception:", exc_info=(exc_type, exc_value, exc_traceback))
 
+def analyze_exception(e):
+    tb = e.__traceback__
+    # local_vars = e.__traceback__.tb_frame.f_locals
+    # print(local_vars)
+    while tb:
+        filename = tb.tb_frame.f_code.co_filename
+        name = tb.tb_frame.f_code.co_name
+        line_no = tb.tb_lineno
+        print(f"File {filename} line {line_no}, in {name}")
+        tb = tb.tb_next
 
 def func_monitor(func):
 
@@ -18,13 +28,15 @@ def func_monitor(func):
         # print('args = {}'.format(*args))
         ret = None
         try :
-            ret = func(*args, **kwargs)
-            print('finished  %s():' % func.__name__)
+            # ret = func(*args, **kwargs)
+            # print('finished  %s():' % func.__name__)
+            return func(*args, **kwargs)
         except Exception as e:
+            # pass
+            # analyze_exception(e)
             print(traceback.format_exc())
             raise e
-
-        return ret
+        # return ret
 
     return wrapper
 a = [1,2]
@@ -39,25 +51,33 @@ def p(lis):
 # sys.excepthook = exception_hook3
 
 
-try:
-    c = p(a)
-except Exception as e:
-    # exc_type, exc_value, exc_traceback = sys.exc_info()
-    # print(exc_value)
-    # traceback.print_tb(exc_traceback)
-    # traceback.print_exception(exc_type, exc_value, exc_traceback, limit=None, file=sys.stdout)
-    print(traceback.format_exc())
 
+
+# try:
+#     try:
+#         c = p(a)
+#     except Exception as e:
+#         print(traceback.format_exc())
+#         raise e
+# except Exception as e:
+#     # exc_type, exc_value, exc_traceback = sys.exc_info()
+#     # print(exc_value)
+#     # traceback.print_tb(exc_traceback)
+#     # traceback.print_exception(exc_type, exc_value, exc_traceback, limit=None, file=sys.stdout)
+#     print(traceback.format_exc())
+
+# """
 print("#"*30)
 try:
     c = p_with_monitor(a)
 except Exception as e:
-    print("AATT")
+    print("#"*30)
     # exc_type, exc_value, exc_traceback = sys.exc_info()
     # print(exc_value)
     # traceback.print_tb(exc_traceback)
     # traceback.print_exception(exc_type, exc_value, exc_traceback, limit=None, file=sys.stdout)
     print(traceback.format_exc())
+# """
     # tb = e.__traceback__
     # # local_vars = e.__traceback__.tb_frame.f_locals
     # # print(local_vars)
