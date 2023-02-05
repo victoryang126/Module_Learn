@@ -1,0 +1,3 @@
+zou|1234|Manager
+test|666|Student
+dev|555|Teacher
