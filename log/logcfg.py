@@ -3,7 +3,7 @@ import colorlog
 
 
 class Log:
-    def __init__(self, name=None, log_level=logging.DEBUG):
+    def __init__(self, name=None, log_level=logging.DEBUG,mode = "a"):
         # 获取logger对象
         self.logger = logging.getLogger(name)
 
@@ -29,7 +29,7 @@ class Log:
         # 输出到控制台
         console_handler = logging.StreamHandler()
         # 输出到文件
-        file_handler = logging.FileHandler(filename=name, mode='a', encoding='utf-8')
+        file_handler = logging.FileHandler(filename=name, mode='w', encoding='utf-8')
 
         # 设置日志格式
         console_handler.setFormatter(console_formatter)

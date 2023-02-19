@@ -48,11 +48,21 @@ def p_with_monitor(lis):
 
 def p(lis):
     print(lis[3])
+
+@func_monitor
+def p_with_monitor2(lis):
+    try:
+        print(lis[3])
+    except Exception as e:
+        print("Function exception")
+        print(traceback.format_exc())
 # sys.excepthook = exception_hook3
 
 
+p_with_monitor2(a)
 
-
+print("#"*10)
+p_with_monitor(a)
 # try:
 #     try:
 #         c = p(a)
@@ -67,16 +77,16 @@ def p(lis):
 #     print(traceback.format_exc())
 
 # """
-print("#"*30)
-try:
-    c = p_with_monitor(a)
-except Exception as e:
-    print("#"*30)
+# print("#"*30)
+# try:
+#     c = p_with_monitor(a)
+# except Exception as e:
+#     print("#"*30)
     # exc_type, exc_value, exc_traceback = sys.exc_info()
     # print(exc_value)
     # traceback.print_tb(exc_traceback)
     # traceback.print_exception(exc_type, exc_value, exc_traceback, limit=None, file=sys.stdout)
-    print(traceback.format_exc())
+    # print(traceback.format_exc())
 # """
     # tb = e.__traceback__
     # # local_vars = e.__traceback__.tb_frame.f_locals
