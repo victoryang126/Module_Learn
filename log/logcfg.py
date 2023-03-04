@@ -1,6 +1,6 @@
 import logging
 import colorlog
-
+import traceback
 
 class Log:
     def __init__(self, name=None, log_level=logging.DEBUG,mode = "a"):
@@ -59,13 +59,20 @@ class Log:
 
     def critical(self, message):
         self.logger.critical(message)
-
-
+log = Log(name='log.txt', log_level=logging.WARNING)
+def p_with_monitor(lis):
+    try:
+        print(lis[3])
+    except Exception as e:
+        # print(traceback.format_exc())
+        log.critical("Critical")
+        # log.critical(traceback.format_exc())
+        # analyze_exception()
 if __name__ == '__main__':
     # 控制台只会显示warning及以上级别日志信息，而log.txt文件中则会记录error及以上级别日志信息
-    log = Log(name='log.txt', log_level=logging.WARNING)
-    log.debug('debug')
-    log.info('info')
-    log.warning('warning')
-    log.error('error')
-    log.critical('critical')
+    log.critical("CR")
+    # a = [1, 2]
+    #
+    # p_with_monitor(a[3])
+
+

@@ -20,8 +20,6 @@ def analyze_exception(e):
         tb = tb.tb_next
 
 def func_monitor(func):
-
-
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         print('call %s():' % func.__name__)
@@ -49,7 +47,7 @@ def p_with_monitor(lis):
 def p(lis):
     print(lis[3])
 
-@func_monitor
+# @func_monitor
 def p_with_monitor2(lis):
     try:
         print(lis[3])
@@ -61,8 +59,8 @@ def p_with_monitor2(lis):
 
 p_with_monitor2(a)
 
-print("#"*10)
-p_with_monitor(a)
+# print("#"*10)
+# p_with_monitor(a)
 # try:
 #     try:
 #         c = p(a)

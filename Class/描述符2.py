@@ -35,3 +35,6 @@ class Student:
 
 std = Student("V",12,13,14)
 print(std.name,std.math)
+print(std.__dict__)
+# a = std.tostring()
+# print(a)
