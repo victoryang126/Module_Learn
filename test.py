@@ -1,9 +1,13 @@
 from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization
 
-# 生成ECC密钥对
-private_key = ec.generate_private_key(ec.SECP384R1())
+# 生成RSA密钥对
+private_key = rsa.generate_private_key(
+    public_exponent=65537,
+    key_size=2048,
+)
+
 public_key = private_key.public_key()
 
 # 导出并显示公钥
@@ -19,7 +23,11 @@ message = b"这是一个需要签名的消息"
 # 签名
 signature = private_key.sign(
     message,
-    ec.ECDSA(hashes.SHA256())
+    padding.PSS(
+        mgf=padding.MGF1(hashes.SHA256()),
+        salt_length=padding.PSS.MAX_LENGTH
+    ),
+    hashes.SHA256()
 )
 print(f"签名: {signature}")
 
@@ -28,7 +36,11 @@ try:
     public_key.verify(
         signature,
         message,
-        ec.ECDSA(hashes.SHA256())
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
     )
     print("签名验证成功!")
 except Exception as e:
